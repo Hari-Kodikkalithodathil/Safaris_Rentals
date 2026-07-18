@@ -10,5 +10,8 @@ class Customer(models.Model):
     phone=models.CharField(max_length=15, unique=True)
     driving_license_no=models.CharField(max_length=15, unique=True)
 
+    def __str__(self):
+        return f'{self.first_name} {self.last_name}'
+
 class CustomerAddress(models.Model):
     customer=models.ForeignKey(Customer, on_delete=models.CASCADE)
