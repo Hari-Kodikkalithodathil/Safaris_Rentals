@@ -3,7 +3,8 @@ from django.db import models
 # Create your models here.
 
 class Vehicle(models.Model):
-    STATUS_CHOICES=(('ACTIVE', 'Active'),('INACTIVE','Inactive'))
+    STATUS_CHOICES=(('ACTIVE', 'Active'),
+                    ('INACTIVE','Inactive'))
     name=models.CharField(max_length=100)
     slug=models.SlugField(unique=True)
     description=models.TextField()
@@ -20,9 +21,9 @@ class Vehicle(models.Model):
         return self.name
 
 class VehicleImage(models.Model):
-    vehicle=models.ForeignKey(Vehicle, on_delete=models.CASCADE)
+    vehicle=models.ForeignKey(Vehicle, on_delete=models.CASCADE, related_name='images')
     image=models.ImageField(upload_to="vehicles/images/") #This is said to dynamically create a folder named imges inside vehicles when the first image get uploaded
-    caption=models.CharField(max_length=35, blank=True)
+    caption=models.CharField(max_length=100, blank=True)
     is_primary=models.BooleanField(default=False)
 
     def __str__(self):

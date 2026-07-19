@@ -37,7 +37,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'accounts',
+    'bookings',
+    'common',
+    'customers',
+    'notifications',
+    'payments',
+    'pricing',
+    'reports',
+    'vehicles',
 ]
+
+AUTH_USER_MODEL='accounts.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
