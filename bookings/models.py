@@ -26,6 +26,7 @@ class Booking(models.Model):
     def __str__(self):
         return f'{self.customer.first_name} {self.customer.last_name} : {self.vehicle.name}'
 
+
 '''The class below is for vehicles when thay become unavailable due to service, breakdowns
  etc. It is not about unavailability due to bookings'''
 class BlockedDate(models.Model):
