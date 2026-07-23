@@ -2,6 +2,7 @@ from . models import Booking
 from datetime import datetime
 from django.utils import timezone
 from . models import BlockedDate
+from decimal import Decimal
 
 
 
@@ -56,3 +57,32 @@ def vehicle_not_blocked(vehicle, pickup_date, return_date):
         return  False
     
     return True
+
+
+
+
+'''The function that creates an object of Booking'''
+
+def create_booking(customer, vehicle,pickup_datetime, return_datetime,
+                   subtotal,tax,deposit_paid):
+    
+    validate_booking_dates(pickup_datetime, return_datetime)
+
+    if not vehicle_not_blocked(vehicle, pickup_datetime, return_datetime):
+        raise ValueError("The vehicle is under maintenance")
+
+    if not vehicle_availability(vehicle, pickup_datetime, return_datetime):
+        raise ValueError("The vehicle is already booked")
+
+    total_price=subtotal+tax
+
+    booking=Booking.objects.create(
+        customer=customer,
+        vehicle=vehicle,
+        pickup_date=pickup_datetime,
+        return_date=return_datetime,
+        subtotal=subtotal,
+        tax=tax,
+        total_price=total_price,
+        deposit_paid=deposit_paid,
+    )
