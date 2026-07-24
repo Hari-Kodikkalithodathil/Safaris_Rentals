@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'pricing',
     'reports',
     'vehicles',
+    'rest_framework'
 ]
 
 AUTH_USER_MODEL='accounts.CustomUser'
