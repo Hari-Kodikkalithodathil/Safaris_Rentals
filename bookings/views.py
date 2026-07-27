@@ -9,6 +9,8 @@ from customers.models import Customer
 from vehicles.models import Vehicle
 from .serializers import BookingSerializer
 from .services import create_booking
+from .models import Booking
+from .serializers import BookingListSerializer
 
 # Create your views here.
 
@@ -62,3 +64,9 @@ class BookingAPIView(APIView):
                 {"error":str(e)},
                 status=status.HTTP_400_BAD_REQUEST
             )
+
+
+    def get(self, request):
+        bookings=Booking.objects.all()
+        serializer=BookingListSerializer(bookings, many=True)
+        return Response(serializer.data)
