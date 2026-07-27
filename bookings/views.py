@@ -39,7 +39,7 @@ class BookingAPIView(APIView):
 
 
         
-        '''Hardcoding price calculation value for temporary testing'''
+        '''Hardcoding price calculation values for temporary testing'''
 
         subtotal=Decimal("1000.00")
         tax=Decimal("180.00")

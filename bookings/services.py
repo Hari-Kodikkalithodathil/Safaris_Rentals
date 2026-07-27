@@ -86,3 +86,5 @@ def create_booking(customer, vehicle,pickup_datetime, return_datetime,
         total_price=total_price,
         deposit_paid=deposit_paid,
     )
+
+    return booking
