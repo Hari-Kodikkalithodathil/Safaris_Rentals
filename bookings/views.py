@@ -66,7 +66,21 @@ class BookingAPIView(APIView):
             )
 
 
-    def get(self, request):
-        bookings=Booking.objects.all()
-        serializer=BookingListSerializer(bookings, many=True)
+    def get(self, request, id=None):
+
+        if id is None:
+            bookings=Booking.objects.all()
+            serializer=BookingListSerializer(bookings, many=True)
+            return Response(serializer.data)
+
+        try:
+            bookings=Booking.objects.get(id=id)
+
+        except Booking.DoesNotExist:
+            return Response(
+                {"error": "Booking not found"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        serializer=BookingListSerializer(bookings)
         return Response(serializer.data)
