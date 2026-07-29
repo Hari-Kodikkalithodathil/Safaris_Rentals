@@ -17,6 +17,7 @@ from .serializers import BookingListSerializer
 class BookingAPIView(APIView):
 
     def post(self, request):
+
         serializer=BookingSerializer(data=request.data)
 
         if  not serializer.is_valid():
@@ -27,6 +28,7 @@ class BookingAPIView(APIView):
 
         try:
             customer=Customer.objects.get(id=data["customer_id"])
+
         except Customer.DoesNotExist:
             return Response(
                 {"error" : "Customer not found"},
@@ -35,6 +37,7 @@ class BookingAPIView(APIView):
 
         try:
             vehicle=Vehicle.objects.get(id=data["vehicle_id"])
+
         except Vehicle.DoesNotExist:
             return Response({"error" : "Vehicle not found"},
                             status=status.HTTP_404_NOT_FOUND)
@@ -84,3 +87,42 @@ class BookingAPIView(APIView):
 
         serializer=BookingListSerializer(bookings)
         return Response(serializer.data)
+
+
+
+    def put(self, request, id):
+
+        try:
+            booking=Booking.objects.get(id=id)
+
+        except Booking.DoesNotExist:
+            return Response(
+                {"error": "Booking does not exist"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        serializer=BookingSerializer(data=request.data)
+
+        if not serializer.is_valid():
+            return Response(
+                serializer.errors,
+                status=status.HTTP_400_BAD_REQUEST
+                )
+
+        data=serializer.validated_data
+
+        try:
+            customer=Customer.objects.get(id=serializer.validated_data["customer_id"])
+            vehicle=Vehicle.objects.get(id=data["vehicle_id"])
+
+        except Customer.DoesNotExist:
+            return Response(
+                {"error":"No such customer exists"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        except Vehicle.DoesNotExist:
+            return Response(
+                {"error":"No such vehicle exists"},
+                status=status.HTTP_404_NOT_FOUND
+                )

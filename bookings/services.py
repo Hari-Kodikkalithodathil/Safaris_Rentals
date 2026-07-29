@@ -9,14 +9,14 @@ from decimal import Decimal
 '''Checking whether a particular vehicle is available on a particular date.
 If a vehicle is avalible the function retuns true else it returns false'''
 
-def vehicle_availability(vehicle, pickup_datetime, return_datetime):
+def vehicle_availability(vehicle, pickup_datetime, return_datetime, exclude_bookings=None):
 
     overlapping_bookings=Booking.objects.filter(
         vehicle=vehicle,
         booking_status__in=["CONFIRMED","PENDING"],
         pickup_date__lt=return_datetime,
         return_date__gt=pickup_datetime
-    )
+    ).exclude(id=exclude_bookings.id)
 
     if overlapping_bookings.exists():
         return False
@@ -33,7 +33,7 @@ def validate_booking_dates(pickup_datetime, return_datetime):
         raise ValueError("Return date must be after pickup date")
     
     if pickup_datetime<timezone.now(): 
-        raise ValueError("Pickup date cannot be in in the past")
+        raise ValueError("Pickup date cannot be in the past")
     
     return True
 

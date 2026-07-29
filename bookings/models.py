@@ -27,11 +27,16 @@ class Booking(models.Model):
         return f'{self.customer.first_name} {self.customer.last_name} : {self.vehicle.name}'
 
 
+
 '''The class below is for vehicles when thay become unavailable due to service, breakdowns
  etc. It is not about unavailability due to bookings'''
+
 class BlockedDate(models.Model):
     vehicle=models.ForeignKey(Vehicle, on_delete=models.CASCADE)
     start_date=models.DateField()
     end_date=models.DateField()
     reason=models.TextField(blank=True)
+
+    def __str__(self):
+        return f'{self.vehicle.name} : Blocked from {self.start_date} to {self.end_date}'
     
