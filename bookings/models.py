@@ -24,7 +24,7 @@ class Booking(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.customer.first_name} {self.customer.last_name} : {self.vehicle.name}'
+        return f'{self.id}    . {self.customer.first_name} {self.customer.last_name} : {self.vehicle.name}'
 
 
 

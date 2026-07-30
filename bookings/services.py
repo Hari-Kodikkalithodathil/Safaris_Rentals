@@ -63,8 +63,8 @@ def vehicle_not_blocked(vehicle, pickup_date, return_date):
 
 '''The function that creates an object of Booking'''
 
-def create_booking(customer, vehicle,pickup_datetime, return_datetime,
-                   subtotal,tax,deposit_paid):
+def create_booking(customer, vehicle, pickup_datetime, return_datetime,
+                   subtotal, tax, deposit_paid):
     
     validate_booking_dates(pickup_datetime, return_datetime)
 
@@ -86,5 +86,28 @@ def create_booking(customer, vehicle,pickup_datetime, return_datetime,
         total_price=total_price,
         deposit_paid=deposit_paid,
     )
+
+    return booking
+
+
+
+
+'''Creating the fucntion to update a booking'''
+
+def update_booking(booking, vehicle, pickup_datetime, return_datetime):
+
+    validate_booking_dates(pickup_datetime, return_datetime)
+
+    if not vehicle_availability(vehicle, pickup_datetime, return_datetime, 
+                                exclude_bookings=booking):
+        raise ValueError("The vehicle is already booked during this period")
+
+    if not vehicle_not_blocked(vehicle, pickup_datetime, return_datetime):
+        raise ValueError("The vehicle is under maintenance during this period")
+
+    # booking.customer=customer
+    booking.vehicle=vehicle
+    booking.pickup_date=pickup_datetime
+    booking.save()
 
     return booking

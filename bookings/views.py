@@ -8,7 +8,7 @@ from decimal import Decimal
 from customers.models import Customer
 from vehicles.models import Vehicle
 from .serializers import BookingSerializer
-from .services import create_booking
+from .services import create_booking, update_booking
 from .models import Booking
 from .serializers import BookingListSerializer
 
@@ -126,3 +126,24 @@ class BookingAPIView(APIView):
                 {"error":"No such vehicle exists"},
                 status=status.HTTP_404_NOT_FOUND
                 )
+
+        pickup_datetime=data["pickup_datetime"]
+        return_datetime=data["return_datetime"]
+
+        try:
+            updated_booking=update_booking(booking, vehicle, pickup_datetime, return_datetime)
+
+        except ValueError as e:
+            return Response(
+                {"message": str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        serializer=BookingListSerializer(updated_booking)
+
+        return Response(serializer.data)
+
+        # if not update_booking(customer, vehicle, pickup_date, return_date):
+        #     return Response("error": "The vehicle is unavailable during this period")
+
+        

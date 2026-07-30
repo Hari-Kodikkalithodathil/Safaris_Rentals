@@ -11,7 +11,7 @@ class Customer(models.Model):
     driving_license_no=models.CharField(max_length=15, unique=True)
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name}'
+        return f'{self.id}   . {self.first_name} {self.last_name}'
 
 class CustomerAddress(models.Model):
     ADDRESS_TYPES=(('RESIDENCE', 'Residence Address'),
@@ -25,4 +25,4 @@ class CustomerAddress(models.Model):
     address_type=models.CharField(max_length=10, choices=ADDRESS_TYPES, default='RESIDENCE')
 
     def __str__(self):
-        return f'{self.customer.first_name} {self.customer.last_name} - {self.city}'
+        return f'{self.id}   . {self.customer.first_name} {self.customer.last_name} - {self.city}'
