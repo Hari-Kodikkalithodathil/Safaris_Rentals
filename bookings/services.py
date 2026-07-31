@@ -14,8 +14,8 @@ def vehicle_availability(vehicle, pickup_datetime, return_datetime, exclude_book
     overlapping_bookings=Booking.objects.filter(
         vehicle=vehicle,
         booking_status__in=["CONFIRMED","PENDING"],
-        pickup_date__lt=return_datetime,
-        return_date__gt=pickup_datetime
+        pickup_datetime__lt=return_datetime,
+        return_datetime__gt=pickup_datetime
     ).exclude(id=exclude_bookings.id)
 
     if overlapping_bookings.exists():
@@ -45,12 +45,12 @@ def validate_booking_dates(pickup_datetime, return_datetime):
 '''Checking whether a vehicle is not blocked. The function 'vehicle_not_blocked' returns
 a true value if the vehicle is free or a false value if it is blocked'''
 
-def vehicle_not_blocked(vehicle, pickup_date, return_date):
+def vehicle_not_blocked(vehicle, pickup_datetime, return_datetime):
 
     blocked_periods=BlockedDate.objects.filter(
         vehicle=vehicle,
-        start_date__lt=return_date.date(),
-        end_date__gt=pickup_date.date()
+        start_date__lt=return_datetime.date(),
+        end_date__gt=pickup_datetime.date()
     )
 
     if blocked_periods.exists():
@@ -79,8 +79,8 @@ def create_booking(customer, vehicle, pickup_datetime, return_datetime,
     booking=Booking.objects.create(
         customer=customer,
         vehicle=vehicle,
-        pickup_date=pickup_datetime,
-        return_date=return_datetime,
+        pickup_datetime=pickup_datetime,
+        return_datetime=return_datetime,
         subtotal=subtotal,
         tax=tax,
         total_price=total_price,
@@ -107,7 +107,8 @@ def update_booking(booking, vehicle, pickup_datetime, return_datetime):
 
     # booking.customer=customer
     booking.vehicle=vehicle
-    booking.pickup_date=pickup_datetime
+    booking.pickup_datetime=pickup_datetime
+    booking.return_datetime=return_datetime
     booking.save()
 
     return booking

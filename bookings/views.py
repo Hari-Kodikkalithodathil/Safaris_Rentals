@@ -139,7 +139,7 @@ class BookingAPIView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        serializer=BookingListSerializer(updated_booking)
+        serializer=BookingSerializer(updated_booking)
 
         return Response(serializer.data)
 
