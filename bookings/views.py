@@ -53,8 +53,8 @@ class BookingAPIView(APIView):
 
 
         try:
-            booking=create_booking(customer,vehicle,data['pickup_datetime'],data["return_datetime"],
-                           subtotal,tax,deposit_paid)
+            booking=create_booking(customer,vehicle,data['pickup_datetime'],
+                           data["return_datetime"], subtotal,tax,deposit_paid)
 
             return Response(
                 {"message":"Booking successful",
@@ -146,4 +146,19 @@ class BookingAPIView(APIView):
         # if not update_booking(customer, vehicle, pickup_date, return_date):
         #     return Response("error": "The vehicle is unavailable during this period")
 
-        
+    
+    def delete(self, request, id):
+
+        try:
+            booking=Booking.objects.get(id=id)
+
+        except Booking.DoesNotExist:
+            return Response({"error": "Such a booking does not exist"},
+                    status=status.HTTP_404_NOT_FOUND)
+
+        booking.booking_status="CANCELLED"
+        booking.save()
+
+        return Response({"message" : "Deletion Successful",
+                         "booking_id" : booking.id},
+                        status=status.HTTP_200_OK)

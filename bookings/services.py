@@ -1,8 +1,9 @@
-from . models import Booking
+from .models import Booking
 from datetime import datetime
 from django.utils import timezone
-from . models import BlockedDate
+from .models import BlockedDate
 from decimal import Decimal
+from math import ceil
 
 
 
@@ -16,7 +17,10 @@ def vehicle_availability(vehicle, pickup_datetime, return_datetime, exclude_book
         booking_status__in=["CONFIRMED","PENDING"],
         pickup_datetime__lt=return_datetime,
         return_datetime__gt=pickup_datetime
-    ).exclude(id=exclude_bookings.id)
+    )
+
+    if exclude_bookings is not None:
+        overlapping_bookings=overlapping_bookings.exclude(id=exclude_bookings.id)
 
     if overlapping_bookings.exists():
         return False
@@ -30,10 +34,10 @@ def vehicle_availability(vehicle, pickup_datetime, return_datetime, exclude_book
 def validate_booking_dates(pickup_datetime, return_datetime):
 
     if pickup_datetime>=return_datetime:
-        raise ValueError("Return date must be after pickup date")
+        raise ValueError("Return datetime must be after pickup datetime")
     
     if pickup_datetime<timezone.now(): 
-        raise ValueError("Pickup date cannot be in the past")
+        raise ValueError("Pickup datetime cannot be in the past")
     
     return True
 
@@ -88,6 +92,40 @@ def create_booking(customer, vehicle, pickup_datetime, return_datetime,
     )
 
     return booking
+
+
+
+
+'''Function to calculate the total price of the booking'''
+
+def calculate_booking_price(vehicle, pickup_datetime, return_datetime):
+
+    duration=return_datetime-pickup_datetime
+    rental_days=ceil(duration.total_seconds()/86400)
+
+    months=rental_days//30
+    remaining_days=rental_days%30
+
+    weeks=remaining_days//7
+    days=remaining_days%7
+
+    subtotal = (months*vehicle.monthly_rate + weeks*vehicle.weekly_rate 
+                + days*vehicle.daily_rate)
+
+    tax_rate=Decimal("0.18")
+    tax=subtotal*tax_rate
+
+    total_price=subtotal+tax
+
+    deposit_paid=vehicle.security_deposit
+
+    return{
+        "rental_days" : rental_days,
+        "subtotal" : subtotal,
+        "tax" : tax,
+        "total_price" : total_price,
+        "deposit_paid" : deposit_paid,
+    }
 
 
 

@@ -1,0 +1,7 @@
+name,slug,description,seating_capacity,daily_rate,weekly_rate,monthly_rate,mileage_limit,extra_mile_cost,security_deposit,status
+Toyota Fortuner,toyota-fortuner,Toyota Fortuner rental vehicle,4,2771,16626,55420,150,15,3000,INACTIVE
+Toyota Glanza,toyota-glanza,Toyota Glanza rental vehicle,7,1634,9804,32680,150,10,7500,INACTIVE
+Maruti Suzuki Swift,maruti-suzuki-swift,Maruti Suzuki Swift rental vehicle,7,3319,19914,66380,200,10,7500,INACTIVE
+Maruti Suzuki Baleno,maruti-suzuki-baleno,Maruti Suzuki Baleno rental vehicle,5,3998,23988,79960,200,20,10000,INACTIVE
+Maruti Suzuki Ertiga,maruti-suzuki-ertiga,Maruti Suzuki Ertiga rental vehicle,7,1910,11460,38200,250,15,7500,ACTIVE
+Hyundai i20,hyundai-i20,Hyundai i20 rental vehicle,4,3283,19698,65660,200,25,3000,ACTIVE
