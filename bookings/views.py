@@ -11,10 +11,13 @@ from .serializers import BookingSerializer
 from .services import create_booking, update_booking
 from .models import Booking
 from .serializers import BookingListSerializer
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 
 class BookingAPIView(APIView):
+
+    permission_classes=[IsAuthenticated]
 
     def post(self, request):
 
@@ -27,7 +30,8 @@ class BookingAPIView(APIView):
         data=serializer.validated_data
 
         try:
-            customer=Customer.objects.get(id=data["customer_id"])
+            # customer=Customer.objects.get(id=data["customer_id"])
+            customer=request.user.customer
 
         except Customer.DoesNotExist:
             return Response(
@@ -46,15 +50,15 @@ class BookingAPIView(APIView):
         
         '''Hardcoding price calculation values for temporary testing'''
 
-        subtotal=Decimal("1000.00")
+        '''subtotal=Decimal("1000.00")
         tax=Decimal("180.00")
-        deposit_paid=Decimal("5000.00")
+        deposit_paid=Decimal("5000.00")'''
 
 
 
         try:
             booking=create_booking(customer,vehicle,data['pickup_datetime'],
-                           data["return_datetime"], subtotal,tax,deposit_paid)
+                           data["return_datetime"])
 
             return Response(
                 {"message":"Booking successful",

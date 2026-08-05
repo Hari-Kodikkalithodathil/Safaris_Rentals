@@ -101,8 +101,7 @@ def calculate_booking_price(vehicle, pickup_datetime, return_datetime):
 
 '''The function that creates an object of Booking'''
 
-def create_booking(customer, vehicle, pickup_datetime, return_datetime,
-                   subtotal, tax, deposit_paid):
+def create_booking(customer, vehicle, pickup_datetime, return_datetime,):
     
     validate_booking_dates(pickup_datetime, return_datetime)
 
@@ -112,17 +111,19 @@ def create_booking(customer, vehicle, pickup_datetime, return_datetime,
     if not vehicle_availability(vehicle, pickup_datetime, return_datetime):
         raise ValueError("The vehicle is already booked")
 
-    total_price=subtotal+tax
+    # total_price=subtotal+tax
+
+    price=calculate_booking_price(vehicle, pickup_datetime, return_datetime)
 
     booking=Booking.objects.create(
         customer=customer,
         vehicle=vehicle,
         pickup_datetime=pickup_datetime,
         return_datetime=return_datetime,
-        subtotal=subtotal,
-        tax=tax,
-        total_price=total_price,
-        deposit_paid=deposit_paid,
+        subtotal=price["subtotal"],
+        tax=price["tax"],
+        total_price=price["total_price"],
+        deposit_paid=price["deposit_paid"],
     )
 
     return booking
