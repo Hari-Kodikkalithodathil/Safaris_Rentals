@@ -18,7 +18,7 @@ class Command(BaseCommand):
             for row in reader:
 
                 User.objects.create_user(
-                    username=row["username"],
+                    # username=row["username"],
                     email=row["email"],
                     password=row["password"],
                     first_name=row["first_name"],

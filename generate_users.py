@@ -7,7 +7,7 @@ with open("users.csv", "w", newline="") as file:
     writer = csv.writer(file)
 
     writer.writerow([
-        "username",
+        # "username",
         "email",
         "password",
         "first_name",
@@ -18,7 +18,7 @@ with open("users.csv", "w", newline="") as file:
 
     for _ in range(number_of_rows):
         writer.writerow([
-            fake.unique.user_name(),
+            # fake.unique.user_name(),
             fake.unique.email(),
             "Test@123",
             fake.first_name(),

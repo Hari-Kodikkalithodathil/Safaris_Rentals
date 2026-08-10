@@ -1,6 +1,6 @@
-username,email,password,first_name,last_name
-daniel02,jeffreyclark@example.net,Test@123,Timothy,Jones
-michelegriffin,taylorjohn@example.net,Test@123,Jeffrey,Atkinson
-ubyrd,wmason@example.org,Test@123,Jeffrey,Parker
-mannbecky,robinsonbrett@example.org,Test@123,Larry,Douglas
-bpowers,joshualloyd@example.net,Test@123,Rachel,Jensen
+email,password,first_name,last_name
+castrokatherine@example.org,Test@123,Lisa,Martin
+stewartmichele@example.net,Test@123,Christopher,Jones
+harveysteven@example.org,Test@123,Lynn,Fletcher
+troyrobertson@example.com,Test@123,Nancy,Meyer
+salazarjuan@example.com,Test@123,Jose,Hardin

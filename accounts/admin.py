@@ -5,4 +5,16 @@ from .models import CustomUser
 
 # Register your models here.
 
-admin.site.register(CustomUser,UserAdmin)
+class CustomUserAdmin(UserAdmin):
+    ordering=("email",)
+
+    list_display=(
+        "email",
+        "first_name",
+        "last_name",
+        "is_staff",
+        "is_superuser",
+        "is_active",
+    )
+
+admin.site.register(CustomUser,CustomUserAdmin)
