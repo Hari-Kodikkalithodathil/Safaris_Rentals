@@ -116,7 +116,7 @@ class BookingAPIView(APIView):
         data=serializer.validated_data
 
         try:
-            customer=Customer.objects.get(id=serializer.validated_data["customer_id"])
+            # customer=Customer.objects.get(id=serializer.validated_data["customer_id"])
             vehicle=Vehicle.objects.get(id=data["vehicle_id"])
 
         except Customer.DoesNotExist:
