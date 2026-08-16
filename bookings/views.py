@@ -73,15 +73,17 @@ class BookingAPIView(APIView):
             )
 
 
-    def get(self, request, id=None):
+    def get(self, request, id):
 
-        if id is None:
+        '''The below block is commented as part of authorisation'''
+
+        '''if id is None:
             bookings=Booking.objects.all()
             serializer=BookingListSerializer(bookings, many=True)
-            return Response(serializer.data)
+            return Response(serializer.data)'''
 
         try:
-            bookings=Booking.objects.get(id=id)
+            bookings=Booking.objects.get(id=id, customer=request.user.customer)
 
         except Booking.DoesNotExist:
             return Response(
@@ -97,7 +99,7 @@ class BookingAPIView(APIView):
     def put(self, request, id):
 
         try:
-            booking=Booking.objects.get(id=id)
+            booking=Booking.objects.get(id=id, customer=request.user.customer)
 
         except Booking.DoesNotExist:
             return Response(
@@ -154,7 +156,7 @@ class BookingAPIView(APIView):
     def delete(self, request, id):
 
         try:
-            booking=Booking.objects.get(id=id)
+            booking=Booking.objects.get(id=id, customer=request.user.customer)
 
         except Booking.DoesNotExist:
             return Response({"error": "Such a booking does not exist"},
