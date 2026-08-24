@@ -1,0 +1,11 @@
+customer_email,vehicle_name,pickup_date,return_date,subtotal,tax,total_price,deposit_paid,payment_status,booking_status
+hdrake@example.org,Maruti Suzuki Baleno,2026-11-21 10:20:09,2026-12-01 10:20:09,39980.0,7196.4,47176.4,10000.0,PAID,CONFIRMED
+hdrake@example.org,Maruti Suzuki Ertiga,2026-09-04 22:48:16,2026-09-15 22:48:16,21010.0,3781.8,24791.8,0,PAID,CANCELLED
+howardlori@example.net,Maruti Suzuki Baleno,2026-09-11 20:19:58,2026-09-25 20:19:58,55972.0,10074.96,66046.96,10000.0,PAID,PENDING
+hdrake@example.org,Maruti Suzuki Ertiga,2026-09-04 21:46:53,2026-09-12 21:46:53,15280.0,2750.4,18030.4,0,PAID,CANCELLED
+deborah22@example.net,Maruti Suzuki Ertiga,2026-09-23 01:49:42,2026-10-04 01:49:42,21010.0,3781.8,24791.8,0,PAID,PENDING
+calvin25@example.net,Maruti Suzuki Baleno,2026-10-12 14:20:19,2026-10-17 14:20:19,19990.0,3598.2,23588.2,10000.0,PENDING,CONFIRMED
+stanley42@example.org,Maruti Suzuki Baleno,2026-11-03 16:56:04,2026-11-15 16:56:04,47976.0,8635.68,56611.68,10000.0,PENDING,CANCELLED
+anna67@example.org,Hyundai i20,2026-09-14 12:05:50,2026-09-19 12:05:50,16415.0,2954.7,19369.7,0,PAID,CANCELLED
+tammyhayes@example.com,Maruti Suzuki Swift,2026-11-19 18:44:59,2026-11-28 18:44:59,29871.0,5376.78,35247.78,7500.0,PENDING,CANCELLED
+hdrake@example.org,Toyota Glanza,2026-11-15 14:45:27,2026-11-23 14:45:27,13072.0,2352.96,15424.96,7500.0,PENDING,PENDING

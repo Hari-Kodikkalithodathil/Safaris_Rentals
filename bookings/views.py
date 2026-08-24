@@ -73,14 +73,12 @@ class BookingAPIView(APIView):
             )
 
 
-    def get(self, request, id):
+    def get(self, request, id=None):
 
-        '''The below block is commented as part of authorisation'''
-
-        '''if id is None:
-            bookings=Booking.objects.all()
+        if id is None:
+            bookings=Booking.objects.filter(customer=request.user.customer)
             serializer=BookingListSerializer(bookings, many=True)
-            return Response(serializer.data)'''
+            return Response(serializer.data)
 
         try:
             bookings=Booking.objects.get(id=id, customer=request.user.customer)
@@ -121,11 +119,11 @@ class BookingAPIView(APIView):
             # customer=Customer.objects.get(id=serializer.validated_data["customer_id"])
             vehicle=Vehicle.objects.get(id=data["vehicle_id"])
 
-        except Customer.DoesNotExist:
-            return Response(
-                {"error":"No such customer exists"},
-                status=status.HTTP_404_NOT_FOUND
-            )
+        # except Customer.DoesNotExist:
+        #     return Response(
+        #         {"error":"No such customer exists"},
+        #         status=status.HTTP_404_NOT_FOUND
+        #     )
 
         except Vehicle.DoesNotExist:
             return Response(
@@ -165,6 +163,6 @@ class BookingAPIView(APIView):
         booking.booking_status="CANCELLED"
         booking.save()
 
-        return Response({"message" : "Deletion Successful",
+        return Response({"message" : "Booking Cancellation Sucessfull",
                          "booking_id" : booking.id},
                         status=status.HTTP_200_OK)

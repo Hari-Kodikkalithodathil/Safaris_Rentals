@@ -14,7 +14,7 @@ with open("users.csv", "w", newline="") as file:
         "last_name"
     ])
 
-    number_of_rows = 5
+    number_of_rows = 15
 
     for _ in range(number_of_rows):
         writer.writerow([
