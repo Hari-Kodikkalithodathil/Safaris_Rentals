@@ -23,7 +23,7 @@ class BookingAPIView(APIView):
 
         serializer=BookingSerializer(data=request.data)
 
-        if  not serializer.is_valid():
+        if not serializer.is_valid():
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
 
@@ -47,6 +47,7 @@ class BookingAPIView(APIView):
                             status=status.HTTP_404_NOT_FOUND)
 
 
+    
         
         '''Hardcoding price calculation values for temporary testing'''
 
@@ -81,7 +82,7 @@ class BookingAPIView(APIView):
             return Response(serializer.data)
 
         try:
-            bookings=Booking.objects.get(id=id, customer=request.user.customer)
+            bookings=Booking.objects.get(id=id)
 
         except Booking.DoesNotExist:
             return Response(
@@ -89,6 +90,12 @@ class BookingAPIView(APIView):
                 status=status.HTTP_404_NOT_FOUND
             )
 
+        if bookings.customer!=request.user.customer:
+            return Response(
+                {"error":"You are not authorized to access this booking"},
+                status=status.HTTP_403_FORBIDDEN
+            )
+        
         serializer=BookingListSerializer(bookings)
         return Response(serializer.data)
 
@@ -97,7 +104,7 @@ class BookingAPIView(APIView):
     def put(self, request, id):
 
         try:
-            booking=Booking.objects.get(id=id, customer=request.user.customer)
+            booking=Booking.objects.get(id=id)
 
         except Booking.DoesNotExist:
             return Response(
@@ -105,6 +112,12 @@ class BookingAPIView(APIView):
                 status=status.HTTP_404_NOT_FOUND
             )
 
+        if booking.customer!=request.user.customer:
+            return Response(
+                {"error":"You are not authorized to change this booking"},
+                status=status.HTTP_403_FORBIDDEN
+            )
+        
         serializer=BookingSerializer(data=request.data)
 
         if not serializer.is_valid():
@@ -154,12 +167,16 @@ class BookingAPIView(APIView):
     def delete(self, request, id):
 
         try:
-            booking=Booking.objects.get(id=id, customer=request.user.customer)
+            booking=Booking.objects.get(id=id)
 
         except Booking.DoesNotExist:
             return Response({"error": "Such a booking does not exist"},
                     status=status.HTTP_404_NOT_FOUND)
 
+        if booking.customer!=request.user.customer:
+            return Response({"error":"You are not authorized to change this booking"},
+                            status=status.HTTP_403_FORBIDDEN)
+        
         booking.booking_status="CANCELLED"
         booking.save()
 
